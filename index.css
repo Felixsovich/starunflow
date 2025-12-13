@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    cursor: default;
+    @apply bg-base-cream text-base-dark antialiased overflow-x-hidden;
+  }
+
+  ::selection {
+    background-color: #5e17eb;
+    color: white;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Background Gradient Blob Styles */
+.blob-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #F0EFEA;
+}
+
+.blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: breathe 15s infinite alternate ease-in-out;
+}
