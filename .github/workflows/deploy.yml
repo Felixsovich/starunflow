@@ -1,35 +1,8 @@
-name: Build and Deploy to Timeweb
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'  # укажи свою версию Node.js
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: ftp.timeweb.ru
-          username: ${{ secrets.TIMEWEB_USER }}
-          password: ${{ secrets.TIMEWEB_PASS }}
-          local-dir: ./build      # для React; Vue/Vite — ./dist
-          server-dir: /domains/starunflow.ru/public_html
-          git-ftp-args: --insecure
+- name: Deploy via FTP
+  uses: SamKirkland/FTP-Deploy-Action@4.0.0
+  with:
+    server: vh276.timeweb.ru
+    username: ${{ secrets.TIMEWEB_USER }}
+    password: ${{ secrets.TIMEWEB_PASS }}
+    local-dir: ./dist
+    server-dir: /domains/starunflow.ru/public_html
