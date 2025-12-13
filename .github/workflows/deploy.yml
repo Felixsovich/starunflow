@@ -1,0 +1,23 @@
+name: Deploy to Timeweb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Upload via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.timeweb.ru
+          username: ${{ secrets.TIMEWEB_USER }}
+          password: ${{ secrets.TIMEWEB_PASS }}
+          local-dir: ./       # если React/Vue — укажи ./build или ./dist
+          server-dir: /domains/starunflow.ru/public_html
+          git-ftp-args: --insecure
