@@ -10,20 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Скачиваем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Настраиваем Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # Устанавливаем зависимости
       - name: Install dependencies
         run: npm install
 
+      # Собираем проект
       - name: Build project
         run: npm run build
 
+      # Проверяем, что папка dist существует (для отладки)
+      - name: List dist folder
+        run: ls -la ./dist/
+
+      # Деплой на Timeweb через FTP
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
