@@ -29,6 +29,8 @@ jobs:
         with:
           server: vh276.timeweb.ru
           protocol: ftp
+          port: 21
+          secure: false
           username: ${{ secrets.TIMEWEB_USER }}
           password: ${{ secrets.TIMEWEB_PASS }}
           local-dir: ./dist/
