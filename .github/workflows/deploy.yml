@@ -31,4 +31,5 @@ jobs:
           username: ${{ secrets.TIMEWEB_USER }}
           password: ${{ secrets.TIMEWEB_PASS }}
           local-dir: ./dist/
-          server-dir: /domains/starunflow.ru/public_html
+          server-dir: /domains/starunflow.ru/public_html/
+
