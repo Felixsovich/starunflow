@@ -9,88 +9,98 @@ const Projects: React.FC = () => {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
 
   return (
-    <section ref={targetRef} id="projects" className="relative h-[300vh] bg-base-dark text-base-cream">
+    <section ref={targetRef} id="projects" className="relative h-[300vh] bg-base-cream text-base-dark">
+
       {/* Sticky Container */}
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        
-        {/* Title pinned */}
-        <div className="absolute top-12 left-8 md:left-16 z-20 mix-blend-difference pointer-events-none">
-          <motion.h2 
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8 }}
-            className="font-display text-4xl md:text-6xl font-bold tracking-tighter text-white"
-          >
-            КЛЮЧЕВЫЕ <br /> ПРОЕКТЫ
-          </motion.h2>
-        </div>
 
-        <motion.div style={{ x }} className="flex gap-16 pl-8 md:pl-16 pr-16 items-center">
-          {/* Introductory block */}
-          <div className="w-[80vw] md:w-[30vw] flex-shrink-0 pt-20 md:pt-0">
-             <p className="text-xl md:text-3xl font-light leading-tight text-white/80">
-               Связываю <span className="text-trend-lime">бизнес-задачи</span> и <span className="text-trend-purple">инженерные решения</span>.
-             </p>
-             <div className="mt-8 text-sm font-mono text-white/50 uppercase tracking-widest">Листайте вправо →</div>
+        {/* Background Grid Line */}
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-base-dark/10 z-0" />
+
+        <motion.div style={{ x }} className="flex gap-0 pl-0 items-center h-full">
+
+          {/* Intro Title Block */}
+          <div className="w-[100vw] h-full flex-shrink-0 flex flex-col justify-center px-8 md:px-24 border-r border-base-dark/10 bg-base-cream relative z-10">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] mb-4 text-trend-brown">Selected Works 2019-2025</span>
+            <h2 className="font-display text-[12vw] leading-none font-bold tracking-tighter mb-8">
+              REAL <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-trend-purple to-trend-lime">CASES</span>
+            </h2>
+            <div className="flex gap-4 text-sm font-mono uppercase">
+              <span>SCROLL</span>
+              <span className="animate-bounce">→</span>
+            </div>
           </div>
 
           {PROJECTS.map((project, index) => (
-            <div 
-              key={project.id} 
-              className="group relative w-[85vw] md:w-[60vw] lg:w-[45vw] flex-shrink-0 bg-white/5 rounded-[2rem] border border-white/10 overflow-hidden hover:bg-white/10 transition-colors duration-500 backdrop-blur-sm"
+            <div
+              key={project.id}
+              className="relative w-[100vw] md:w-[80vw] h-full flex-shrink-0 border-r border-base-dark/10 flex flex-col bg-base-cream"
             >
-              {/* Image Top Half */}
-              <div className="h-[40vh] overflow-hidden relative">
-                <div className="absolute inset-0 bg-trend-purple/20 group-hover:bg-transparent transition-colors z-10" />
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
-                />
-              </div>
-
-              {/* Content Bottom Half */}
-              <div className="p-8 md:p-10 flex flex-col justify-between h-[35vh]">
-                <div>
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="font-mono text-xs text-trend-lime uppercase tracking-widest border border-trend-lime/30 px-2 py-1 rounded-full">
-                      Кейс 0{index + 1}
-                    </span>
-                    <button className="p-3 bg-white/10 rounded-full hover:bg-trend-lime hover:text-black transition-colors">
-                      <ArrowUpRight size={20} />
-                    </button>
-                  </div>
-                  
-                  <h3 className="font-display text-2xl md:text-4xl font-bold mb-3 leading-tight">
-                    {project.title}
-                  </h3>
-                  <p className="text-white/60 text-sm md:text-base line-clamp-3">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-4">
+              {/* Header Info */}
+              <div className="h-[15vh] p-8 flex justify-between items-end border-b border-base-dark/10">
+                <span className="font-display text-4xl font-bold">0{index + 1}</span>
+                <div className="flex gap-2">
                   {project.tags.map(tag => (
-                    <span key={tag} className="text-xs font-bold text-white/40 uppercase tracking-wider">
-                      #{tag}
+                    <span key={tag} className="border border-base-dark/20 px-3 py-1 rounded-full text-xs uppercase tracking-wider">
+                      {tag}
                     </span>
                   ))}
                 </div>
               </div>
+
+              {/* Main Visual */}
+              <div className="flex-1 relative group overflow-hidden bg-base-dark">
+                <div className="absolute inset-0 bg-trend-purple/20 mix-blend-overlay z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-500" />
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
+                  onError={(e) => {
+                    // Fallback if image not found
+                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${project.id}/1600/900?grayscale`;
+                  }}
+                />
+
+                {/* Floating Metrics */}
+                <div className="absolute bottom-8 left-8 z-20 flex flex-col gap-2">
+                  {project.metrics.map((m, i) => (
+                    <div key={i} className="bg-white/90 backdrop-blur px-4 py-2 text-sm font-mono font-bold uppercase border-l-4 border-trend-lime">
+                      {m}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer Info */}
+              <div className="h-[25vh] p-8 flex flex-col justify-center bg-white relative">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="font-display text-4xl md:text-5xl font-bold leading-tight uppercase max-w-2xl">
+                    {project.title}
+                  </h3>
+                  <button className="w-16 h-16 rounded-full border border-base-dark/10 flex items-center justify-center hover:bg-trend-lime hover:border-transparent transition-all">
+                    <ArrowUpRight size={32} />
+                  </button>
+                </div>
+                <p className="text-base-dark/60 text-lg max-w-3xl line-clamp-2">
+                  {project.description}
+                </p>
+              </div>
             </div>
           ))}
 
-          {/* End Card */}
-          <div className="w-[80vw] md:w-[30vw] flex-shrink-0 flex items-center justify-center">
-             <div className="text-center">
-               <h3 className="font-display text-4xl font-bold mb-4">Интересно?</h3>
-               <a href="mailto:starunflow@gmail.com" className="inline-block border-b-2 border-trend-lime text-xl pb-1 hover:text-trend-lime transition-colors">
-                 Запросить полное портфолио
-               </a>
-             </div>
+          {/* End CTA Block */}
+          <div className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center bg-trend-lime text-base-dark">
+            <div className="text-center">
+              <h3 className="font-display text-[10vw] font-bold leading-none mb-8 hover:scale-105 transition-transform duration-300 cursor-pointer">
+                LET'S <br /> WORK
+              </h3>
+              <a href="mailto:starunflow@gmail.com" className="font-mono text-xl border-b-2 border-base-dark pb-1 uppercase tracking-widest">
+                Contact Me
+              </a>
+            </div>
           </div>
 
         </motion.div>

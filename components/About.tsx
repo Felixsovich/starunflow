@@ -3,63 +3,76 @@ import { motion } from 'framer-motion';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-32 bg-transparent text-base-dark relative z-10">
+    <section id="about" className="py-32 bg-base-cream text-base-dark relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-          
+
           <div className="lg:w-1/3">
-             <motion.div 
-               initial={{ opacity: 0, filter: 'blur(10px)' }}
-               whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.8 }}
-               className="lg:sticky lg:top-32"
-             >
-               <h2 className="font-display text-5xl md:text-6xl font-bold leading-none mb-8 text-base-dark">
-                 ПРИВЕТ. <br/> ЭТО <br/> <span className="text-transparent bg-clip-text bg-gradient-to-br from-trend-purple to-trend-brown">МИХАИЛ</span>
-               </h2>
-               <div className="aspect-[3/4] rounded-[2rem] overflow-hidden bg-white/50 relative shadow-2xl shadow-trend-purple/10">
-                  <div className="absolute inset-0 bg-trend-purple/10 mix-blend-overlay z-10" />
-                  <img src="https://picsum.photos/600/800?grayscale" alt="Portrait" className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 hover:scale-105 transform" />
-               </div>
-             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="lg:sticky lg:top-32"
+            >
+              <div className="relative">
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-trend-lime z-0" />
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-trend-lime z-0" />
+
+                <div className="aspect-[3/4] overflow-hidden bg-base-dark relative z-10 grayscale hover:grayscale-0 transition-all duration-700">
+                  <img
+                    src="/images/About_Portrait.jpg"
+                    alt="Mikhail Starun"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://picsum.photos/600/800?grayscale";
+                    }}
+                  />
+                  {/* Scanline overlay */}
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-20 bg-[length:100%_2px,3px_100%] pointer-events-none" />
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-between font-mono text-xs uppercase tracking-widest text-base-dark/50">
+                <span>Fig. 01 — Portrait</span>
+                <span>SPB / RU</span>
+              </div>
+            </motion.div>
           </div>
 
           <div className="lg:w-2/3 flex flex-col justify-center">
             <motion.div
-              initial={{ opacity: 0, y: 30, filter: 'blur(5px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="prose prose-xl prose-stone max-w-none"
+              transition={{ duration: 0.8 }}
             >
-              <h3 className="font-display text-3xl md:text-4xl font-bold mb-8 leading-tight">
-                Меньше теории. <br/>
-                <span className="text-trend-purple">Больше практики.</span>
-              </h3>
-              
-              <p className="text-2xl font-light leading-relaxed text-trend-brown mb-8 text-balance">
-                Я не рисую красивые графики ради галочки. Я знаю, чем пахнет склад и сколько стоит простой конвейера.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-6 my-12">
-                <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-base-dark/5 hover:border-trend-purple/50 transition-colors">
-                  <h4 className="font-bold text-lg mb-3 font-display">Операционный опыт</h4>
-                  <p className="text-base text-base-dark/60">
+              <h2 className="font-display text-6xl md:text-8xl font-bold leading-[0.85] mb-12 text-base-dark">
+                HELLO. <br /> I AM <span className="text-trend-purple">MIKHAIL.</span>
+              </h2>
+
+              <div className="border-l-4 border-trend-lime pl-8 py-2 mb-12">
+                <p className="text-2xl md:text-3xl font-light leading-tight text-base-dark/90 text-balance">
+                  Я не рисую графики ради галочки. Я знаю, чем пахнет склад и сколько стоит минута простоя.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 my-12">
+                <div className="group p-6 border border-base-dark/10 hover:bg-base-dark hover:text-white transition-colors duration-300">
+                  <h4 className="font-mono text-xs text-trend-lime uppercase mb-4 tracking-widest">01 / Operations</h4>
+                  <p className="text-lg font-medium leading-relaxed">
                     Работал на 7 заводах. Внедрял SAP EWM своими руками. Видел, где IT разбивается о реальность.
                   </p>
                 </div>
-                <div className="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-base-dark/5 hover:border-trend-purple/50 transition-colors">
-                  <h4 className="font-bold text-lg mb-3 font-display">IT Трансформация</h4>
-                  <p className="text-base text-base-dark/60">
-                    Внедрил машинное зрение для безопасности людей. Не ради хайпа, а чтобы никто не пострадал.
+                <div className="group p-6 border border-base-dark/10 hover:bg-base-dark hover:text-white transition-colors duration-300">
+                  <h4 className="font-mono text-xs text-trend-lime uppercase mb-4 tracking-widest">02 / Transformation</h4>
+                  <p className="text-lg font-medium leading-relaxed">
+                    Внедрил машинное зрение для безопасности людей. Не ради хайпа, а чтобы спасти жизни.
                   </p>
                 </div>
               </div>
 
-              <p className="text-base-dark/80">
-                Сейчас я использую свой опыт в Project Management и Business Analysis. Моя цель — создавать продукты, которые работают в жизни, а не только на презентации.
-              </p>
             </motion.div>
           </div>
 
