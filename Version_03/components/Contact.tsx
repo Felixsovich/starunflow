@@ -17,8 +17,8 @@ const Contact: React.FC = () => {
       if (typeof emailjs !== 'undefined') {
         // @ts-ignore
         await emailjs.send(
-          "YOUR_SERVICE_ID", // Change this after registering on emailjs.com
-          "YOUR_TEMPLATE_ID", // Change this after registering on emailjs.com
+          "service_z6qoxbe",
+          "template_2k8d329",
           {
             from_name: formData.name,
             from_email: formData.email,
@@ -56,7 +56,7 @@ const Contact: React.FC = () => {
             </motion.h2>
 
             <p className="text-xl font-light text-white/40 mb-16 max-w-sm">
-              Готов к новым вызовам в IT-проектах или системном анализе.
+              Готов к новым вызовам в IT-проектах или системном анализе. Пишите, обсудим задачи.
             </p>
 
             <div className="flex flex-col gap-6">
