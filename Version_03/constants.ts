@@ -20,7 +20,7 @@ export const PROJECTS: Project[] = [
       "-80% нарушений",
       "Real-time анализ"
     ],
-    image: "/images/Photo_01.jpg"
+    image: "/images/Project_01.jpg"
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const PROJECTS: Project[] = [
       "14 станций",
       "0 простоев"
     ],
-    image: "/images/Photo_02.jpg"
+    image: "/images/Project_02.jpg"
   },
   {
     id: 3,
@@ -44,28 +44,28 @@ export const PROJECTS: Project[] = [
       "+15% к скорости",
       "Zero Downtime"
     ],
-    image: "/images/Photo_03.jpg"
+    image: "/images/Project_03.jpg"
   }
 ];
 
 export const EXPERIENCE: Experience[] = [
   {
     id: 1,
-    company: "HEINEKEN / OPH",
-    role: "Lead Logistics Specialist",
-    period: "2019 — СЕЙЧАС",
-    description: "Управление логистическими проектами, внедрение цифровых инструментов и методологии Lean.",
+    company: "Объединённые Пивоварни Холдинг",
+    role: "Специалист по планированию производства и поставок",
+    period: "2024 — сейчас",
+    description: "Планирование производства продукции с формированием производственных графиков, управлением запасами и координацией взаимодействующих подразделений.",
     achievements: [
-      "Запуск AI-мониторинга безопасности",
-      "Внедрение SAP EWM как Key User",
-      "Оптимизация затрат склада"
+      "Рост прибыли направления",
+      "Настройка цепочек поставок",
+      "Построение отчетности"
     ],
-    type: 'Operations'
+    type: 'Logistics'
   },
   {
     id: 2,
     company: "MELON FASHION GROUP",
-    role: "Warehouse Technologist",
+    role: "Технолог по складским процессам",
     period: "2023 — 2024",
     description: "Анализ эффективности складских процессов и доработка WMS-системы.",
     achievements: [
@@ -77,10 +77,23 @@ export const EXPERIENCE: Experience[] = [
   },
   {
     id: 3,
+    company: "HEINEKEN",
+    role: "Ведущий специалист по логистике",
+    period: "2019 — 2022",
+    description: "Управление логистическими проектами, внедрение цифровых инструментов и методологии Lean.",
+    achievements: [
+      "Запуск AI-мониторинга безопасности",
+      "Работа в SAP EWM как Key User",
+      "Оптимизация затрат склада"
+    ],
+    type: 'Operations'
+  },
+  {
+    id: 4,
     company: "ТРАНСЛЕС ДВ",
     role: "Менеджер проектов",
     period: "2014 — 2019",
-    description: "Организация сквозных поставок и управления запасами сырья.",
+    description: "Управление полным циклом транспортировки круглого леса.",
     achievements: [
       "Рост прибыли направления",
       "Настройка цепочек поставок",

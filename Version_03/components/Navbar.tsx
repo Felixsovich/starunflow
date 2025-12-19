@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { playClickSound } from '../utils/sounds.ts';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,7 @@ const Navbar: React.FC = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsOpen(false);
+      playClickSound(523.25, 0.1);
     }
   };
 
@@ -31,32 +33,33 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-6'}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
-          
-          {/* Floating Glass Dock */}
+
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-2xl">
-            
-            <div 
-              className="cursor-pointer group flex items-center gap-2 mr-4" 
+
+            <div
+              className="cursor-pointer group flex items-center gap-2 mr-4"
               onClick={() => scrollToSection('hero')}
+              onMouseEnter={() => playClickSound(330, 0.05)}
             >
               <div className="w-2 h-2 bg-trend-lime rounded-full group-hover:animate-ping" />
               <span className="font-display font-bold tracking-tight text-white group-hover:text-trend-lime transition-colors">
                 STARUN<span className="text-white/50">FLOW</span>
               </span>
             </div>
-            
+
             <div className="hidden md:flex items-center gap-6">
               {navItems.map((item) => (
-                <button 
+                <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
+                  onMouseEnter={() => playClickSound(440, 0.03)}
                   className="text-xs font-mono font-medium text-white/60 hover:text-white transition-colors uppercase tracking-widest relative group"
                 >
                   {item.name}
@@ -65,16 +68,20 @@ const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <button 
+            <button
               onClick={() => scrollToSection('contact')}
+              onMouseEnter={() => playClickSound(660, 0.05)}
               className="bg-white text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-trend-lime transition-colors hidden md:block"
             >
               Hire Me
             </button>
 
-            {/* Mobile Toggle */}
             <div className="md:hidden">
-              <button onClick={() => setIsOpen(!isOpen)} className="text-white p-1">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                onMouseEnter={() => playClickSound(440, 0.03)}
+                className="text-white p-1"
+              >
                 {isOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
@@ -82,10 +89,9 @@ const Navbar: React.FC = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -93,7 +99,7 @@ const Navbar: React.FC = () => {
           >
             <div className="bg-[#121212] border border-white/10 rounded-2xl p-4 shadow-2xl backdrop-blur-md">
               <div className="flex flex-col space-y-2">
-                 {navItems.map((item) => (
+                {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.id)}

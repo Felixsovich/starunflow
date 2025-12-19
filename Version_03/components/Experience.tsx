@@ -9,7 +9,7 @@ const Experience: React.FC = () => {
 
         <div className="mb-24">
           <h2 className="font-display text-[10vw] font-bold leading-none">
-            CAREER <span className="text-trend-lime">.</span>
+            КАРЬЕРА <span className="text-trend-lime">.</span>
           </h2>
         </div>
 

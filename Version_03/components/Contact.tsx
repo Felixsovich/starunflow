@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { motion } from 'framer-motion';
+import { playClickSound } from '../utils/sounds.ts';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -9,90 +10,103 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    }, 1500);
+    playClickSound(880, 0.1);
+
+    try {
+      // @ts-ignore
+      if (typeof emailjs !== 'undefined') {
+        // @ts-ignore
+        await emailjs.send(
+          "YOUR_SERVICE_ID", // Change this after registering on emailjs.com
+          "YOUR_TEMPLATE_ID", // Change this after registering on emailjs.com
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+            to_email: "starunflow@gmail.com",
+          }
+        );
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error("EmailJS SDK not found");
+      }
+    } catch (error) {
+      console.error("Mail Error:", error);
+      setStatus('error');
+      // Reset status after a few seconds to allow retry
+      setTimeout(() => setStatus('idle'), 3000);
+    }
   };
 
   return (
-    <section id="contact" className="py-32 bg-base-dark text-base-cream relative overflow-hidden">
+    <section id="contact" className="py-40 bg-base-dark text-white relative overflow-hidden">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-end">
+      <div className="max-w-[90vw] mx-auto relative z-10">
+        <div className="grid lg:grid-cols-2 gap-24 items-end">
 
           <div>
             <motion.h2
-              initial={{ y: 20, opacity: 0, filter: 'blur(10px)' }}
-              whileInView={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="font-display text-6xl md:text-8xl font-bold leading-none mb-8"
+              className="font-display text-6xl md:text-[10vw] font-bold leading-none mb-12"
             >
-              ПИШИТЕ <br />
-              <span className="text-trend-lime">МНЕ.</span>
+              СВЯЗЬ<span className="text-trend-lime">.</span>
             </motion.h2>
 
-            <p className="text-xl font-light text-white/60 mb-12 max-w-md">
-              Нужен PM или Аналитик с реальным производственным опытом? Я готов.
+            <p className="text-xl font-light text-white/40 mb-16 max-w-sm">
+              Готов к новым вызовам в IT-проектах или системном анализе.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-6">
               {SOCIAL_LINKS.map((link, idx) => (
                 <motion.a
                   key={link.name}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 hover:bg-trend-purple hover:border-trend-purple hover:text-white transition-all duration-300"
+                  onMouseEnter={() => playClickSound(440, 0.05)}
+                  className="group flex items-center gap-6 text-sm font-mono uppercase tracking-[0.2em] hover:text-trend-lime transition-colors"
                 >
-                  <link.icon size={18} />
-                  <span className="uppercase text-sm font-bold tracking-wider">{link.name}</span>
+                  <span className="text-white/20 group-hover:text-trend-lime transition-colors">0{idx + 1}</span>
+                  {link.name}
                 </motion.a>
               ))}
             </div>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[2rem] border border-white/10">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-xs font-mono uppercase text-white/40">Имя</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-transparent border-b border-white/20 py-2 text-xl focus:outline-none focus:border-trend-lime transition-colors"
-                    placeholder="Как вас зовут?"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-mono uppercase text-white/40">Email</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-transparent border-b border-white/20 py-2 text-xl focus:outline-none focus:border-trend-lime transition-colors"
-                    placeholder="@gmail.com"
-                  />
-                </div>
+          <div className="bg-white/[0.03] p-8 md:p-12 border border-white/10 rounded-sm">
+            <form onSubmit={handleSubmit} className="space-y-12">
+              <div className="space-y-4">
+                <label className="text-[10px] font-mono uppercase text-white/30">Ваше имя</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-xl focus:outline-none focus:border-trend-lime transition-colors"
+                />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-mono uppercase text-white/40">Сообщение</label>
+              <div className="space-y-4">
+                <label className="text-[10px] font-mono uppercase text-white/30">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-xl focus:outline-none focus:border-trend-lime transition-colors"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <label className="text-[10px] font-mono uppercase text-white/30">Сообщение</label>
                 <textarea
-                  rows={3}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-transparent border-b border-white/20 py-2 text-xl focus:outline-none focus:border-trend-lime transition-colors resize-none"
-                  placeholder="Опишите задачу..."
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-xl focus:outline-none focus:border-trend-lime transition-colors h-32 resize-none"
                 />
               </div>
 
@@ -100,9 +114,11 @@ const Contact: React.FC = () => {
                 <button
                   type="submit"
                   disabled={status === 'sending' || status === 'success'}
-                  className="px-8 py-4 bg-white text-black font-display font-bold text-lg rounded-full hover:bg-trend-lime transition-colors disabled:opacity-50"
+                  onMouseEnter={() => playClickSound(660, 0.05)}
+                  className="group flex items-center gap-4 text-sm font-mono uppercase tracking-widest text-trend-lime"
                 >
-                  {status === 'sending' ? 'Отправка...' : status === 'success' ? 'Отправлено!' : 'Отправить'}
+                  {status === 'sending' ? 'Отправка...' : status === 'success' ? 'Отправлено' : status === 'error' ? 'Ошибка' : 'Отправить'}
+                  <div className="w-12 h-[1px] bg-trend-lime group-hover:w-20 transition-all" />
                 </button>
               </div>
             </form>
@@ -110,9 +126,9 @@ const Contact: React.FC = () => {
 
         </div>
 
-        <div className="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/30 text-xs font-mono uppercase tracking-widest">
-          <p>© {new Date().getFullYear()} Mikhail Starun</p>
-          <p>Design: Modern High Fashion</p>
+        <div className="mt-40 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-white/20 text-[10px] font-mono uppercase tracking-[0.3em]">
+          <p>© {new Date().getFullYear()} MIKHAIL STARUN</p>
+          <p>FORGED IN LOGISTICS</p>
         </div>
       </div>
     </section>

@@ -6,11 +6,19 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Marquee from './components/Marquee';
+import VideoBackground from './components/VideoBackground';
 import GenerativeBackground from './components/GenerativeBackground';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const App: React.FC = () => {
+  const { scrollY } = useScroll();
+
+  // Fade in generative background after Hero (approx 800px)
+  const genBgOpacity = useTransform(scrollY, [400, 1000], [0, 0.5]);
+  const videoBgOpacity = useTransform(scrollY, [600, 1200], [0.8, 0]);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.4,
@@ -32,18 +40,30 @@ const App: React.FC = () => {
 
   return (
     <div className="relative font-sans selection:bg-trend-lime selection:text-black bg-base-dark text-white">
-      {/* New Generative Canvas Background */}
-      <GenerativeBackground />
 
-      {/* Global Noise Overlay */}
-      <div className="noise-overlay" />
+      {/* BACKGROUND ORCHESTRATION */}
+      <motion.div style={{ opacity: videoBgOpacity }}>
+        <VideoBackground />
+      </motion.div>
+
+      <motion.div style={{ opacity: genBgOpacity }}>
+        <GenerativeBackground />
+      </motion.div>
 
       <Navbar />
 
       <main className="relative z-10 w-full overflow-hidden">
         <Hero />
-        <Marquee text="SYSTEMS • LOGIC • GROWTH • AUTOMATION" className="bg-transparent border-t border-b border-white/10 py-10" repeat={3} />
+
+        <Marquee
+          text="SYSTEMS • LOGIC • GROWTH • AUTOMATION • ANALYSIS"
+          className="bg-transparent border-t border-b border-white/10 py-12"
+          repeat={4}
+        />
+
         <About />
+
+        {/* Generative Background is fully visible from here onwards */}
         <Projects />
         <Experience />
         <Contact />

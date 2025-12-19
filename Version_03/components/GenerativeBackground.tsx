@@ -13,7 +13,7 @@ const GenerativeBackground: React.FC = () => {
     let height = canvas.height = window.innerHeight;
     let animationId: number;
 
-    const num = 25;
+    const num = 18; // Slightly fewer for better focus on content
     const degrees = -210;
     const angle = (degrees * Math.PI) / 180;
 
@@ -32,7 +32,7 @@ const GenerativeBackground: React.FC = () => {
       '#dbf246', // Lime
       '#5e17eb', // Purple
       '#ffffff', // White
-      '#1a1a1a'  // Dark
+      '#111111'  // Subtle dark
     ];
 
     let rects: Rect[] = [];
@@ -43,12 +43,12 @@ const GenerativeBackground: React.FC = () => {
         rects.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          w: Math.random() * 600 + 200,
-          h: Math.random() * 40 + 5,
-          speed: Math.random() * 2 + 0.5,
+          w: Math.random() * 800 + 400,
+          h: Math.random() * 20 + 2,
+          speed: Math.random() * 1.5 + 0.2,
           color: colors[Math.floor(Math.random() * colors.length)],
-          blend: Math.random() > 0.5 ? 'overlay' : 'source-over',
-          opacity: Math.random() * 0.3 + 0.1
+          blend: 'screen',
+          opacity: Math.random() * 0.15 + 0.05
         });
       }
     };
@@ -58,7 +58,7 @@ const GenerativeBackground: React.FC = () => {
       ctx.globalCompositeOperation = blend;
       ctx.globalAlpha = opacity;
       ctx.translate(x, y);
-      
+
       const rx = Math.cos(angle) * w;
       const ry = Math.sin(angle) * w;
 
@@ -68,12 +68,10 @@ const GenerativeBackground: React.FC = () => {
       ctx.lineTo(rx, ry + h);
       ctx.lineTo(0, h);
       ctx.closePath();
-      
+
       ctx.fillStyle = color;
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = color;
       ctx.fill();
-      
+
       ctx.restore();
     };
 
@@ -87,18 +85,17 @@ const GenerativeBackground: React.FC = () => {
     init();
 
     const animate = () => {
-      ctx.fillStyle = '#0a0a0a';
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
 
       rects.forEach(rect => {
         rect.x += Math.cos(angle) * rect.speed;
         rect.y += Math.sin(angle) * rect.speed;
 
-        // Wrap around
-        if (rect.x < -800) rect.x = width + 200;
-        if (rect.x > width + 800) rect.x = -200;
-        if (rect.y < -800) rect.y = height + 200;
-        if (rect.y > height + 800) rect.y = -200;
+        // Wrap around with large margins
+        if (rect.x < -1000) rect.x = width + 500;
+        if (rect.x > width + 1000) rect.x = -500;
+        if (rect.y < -1000) rect.y = height + 500;
+        if (rect.y > height + 1000) rect.y = -500;
 
         drawSkewedRect(rect.x, rect.y, rect.w, rect.h, rect.color, rect.opacity, rect.blend);
       });
@@ -114,7 +111,7 @@ const GenerativeBackground: React.FC = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full z-0 pointer-events-none opacity-40" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full z-0 pointer-events-none" />;
 };
 
 export default GenerativeBackground;
