@@ -103,7 +103,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS[0], i: number }> = ({ pro
 
 const Projects: React.FC = () => {
   return (
-    <section id="projects" className="bg-transparent py-20 overflow-hidden">
+    <section id="projects" className="bg-transparent py-20 overflow-hidden relative z-10">
       <div className="flex flex-col">
         {PROJECTS.map((project, index) => (
           <ProjectCard key={project.id} project={project} i={index} />

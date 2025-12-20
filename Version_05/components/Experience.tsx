@@ -4,25 +4,24 @@ import { motion } from 'framer-motion';
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="bg-base-dark text-white py-40 relative z-10 border-t border-white/10">
+    <section id="experience" className="bg-transparent text-white py-40 relative z-10 border-t border-white/10">
       <div className="max-w-[90vw] mx-auto">
 
-        <div className="mb-24">
-          <h2 className="font-display text-[10vw] font-bold leading-none">
-            КАРЬЕРА <span className="text-trend-lime">.</span>
-          </h2>
+        <div className="mb-24 flex items-baseline gap-8">
+          <h2 className="font-display text-5xl md:text-[8vw] font-bold leading-none">ОПЫТ</h2>
+          <span className="font-mono text-xs text-trend-lime uppercase tracking-widest hidden md:block">/// Timeline 2014-2025</span>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-16">
-          {/* Skills Column */}
+        <div className="grid lg:grid-cols-12 gap-20">
+          {/* Skills */}
           <div className="lg:col-span-4">
-            <div className="sticky top-12">
-              <h3 className="font-mono text-sm text-white/40 uppercase mb-8 tracking-widest border-b border-white/10 pb-4">
-                Tech Stack
+            <div className="sticky top-24">
+              <h3 className="font-mono text-[10px] text-white/30 uppercase mb-8 tracking-[0.4em] border-b border-white/10 pb-4">
+                Стек технологий
               </h3>
               <div className="flex flex-wrap gap-2">
                 {SKILLS.map((skill, index) => (
-                  <span key={index} className="px-3 py-2 bg-[#1a1a1a] text-sm font-mono text-white/80 hover:text-trend-lime transition-colors">
+                  <span key={index} className="px-3 py-1.5 bg-white/5 text-[10px] font-mono text-white/60 hover:text-trend-lime transition-colors uppercase border border-white/5">
                     {skill}
                   </span>
                 ))}
@@ -30,36 +29,41 @@ const Experience: React.FC = () => {
             </div>
           </div>
 
-          {/* Timeline Column */}
+          {/* Timeline */}
           <div className="lg:col-span-8">
-            <div className="flex flex-col">
-              {EXPERIENCE.map((exp, index) => (
-                <div
+            <div className="flex flex-col border-l border-white/5">
+              {EXPERIENCE.map((exp) => (
+                <motion.div
                   key={exp.id}
-                  className="group py-16 border-t border-white/10 transition-colors hover:bg-white/5 px-4 md:px-8"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="group py-12 pl-8 md:pl-16 relative hover:bg-white/[0.02] transition-colors"
                 >
-                  <div className="flex flex-col md:flex-row justify-between md:items-start mb-6">
-                    <h3 className="font-display text-4xl md:text-5xl font-bold mb-2 md:mb-0 group-hover:translate-x-4 transition-transform duration-300">
+                  {/* Dot */}
+                  <div className="absolute left-[-4.5px] top-16 w-2 h-2 rounded-full bg-trend-lime shadow-[0_0_10px_#dbf246] opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                  <div className="flex flex-col md:flex-row justify-between md:items-baseline mb-4">
+                    <h3 className="font-display text-3xl md:text-4xl font-bold uppercase group-hover:text-trend-lime transition-colors">
                       {exp.role}
                     </h3>
-                    <span className="font-mono text-lg text-trend-lime">{exp.period}</span>
+                    <span className="font-mono text-sm text-white/40">{exp.period}</span>
                   </div>
 
-                  <h4 className="text-xl text-white/50 mb-8 font-mono">{exp.company}</h4>
+                  <h4 className="text-lg text-white/60 mb-8 font-mono tracking-tight">{exp.company}</h4>
 
-                  <p className="text-xl text-white/80 font-light max-w-2xl mb-8">
+                  <p className="text-lg text-white/50 font-light max-w-2xl mb-8 leading-relaxed">
                     {exp.description}
                   </p>
 
-                  <ul className="space-y-2">
+                  <ul className="grid md:grid-cols-2 gap-4">
                     {exp.achievements.map((ach, i) => (
-                      <li key={i} className="flex items-center text-sm text-white/40 font-mono">
-                        <span className="w-1.5 h-1.5 bg-trend-lime rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        {ach}
+                      <li key={i} className="text-[11px] text-white/30 font-mono flex items-start">
+                        <span className="text-trend-lime mr-2">/</span> {ach}
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

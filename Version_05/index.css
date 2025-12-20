@@ -19,7 +19,7 @@
   }
 }
 
-/* INFINITE MARQUEE */
+/* INFINITE MARQUEE - HYPER SLOW MOTION */
 @keyframes marquee-scroll {
   0% {
     transform: translateX(0);
@@ -33,7 +33,7 @@
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 30s linear infinite;
+  animation: marquee-scroll 120s linear infinite;
 }
 
 /* APPLE GLASS */

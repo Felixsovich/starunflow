@@ -13,7 +13,7 @@ const GenerativeBackground: React.FC = () => {
     let height = canvas.height = window.innerHeight;
     let animationId: number;
 
-    const num = 18; // Slightly fewer for better focus on content
+    const num = 20;
     const degrees = -210;
     const angle = (degrees * Math.PI) / 180;
 
@@ -26,14 +26,15 @@ const GenerativeBackground: React.FC = () => {
       color: string;
       blend: GlobalCompositeOperation;
       opacity: number;
+      pulseSpeed: number;
     }
 
-    const colors = [
-      '#dbf246', // Lime
-      '#5e17eb', // Purple
-      '#ffffff', // White
-      '#111111'  // Subtle dark
-    ];
+    const getRandomColor = () => {
+      const h = Math.floor(Math.random() * 360);
+      const s = Math.floor(Math.random() * 30) + 50;
+      const l = Math.floor(Math.random() * 20) + 50;
+      return `hsl(${h}, ${s}%, ${l}%)`;
+    };
 
     let rects: Rect[] = [];
 
@@ -41,14 +42,15 @@ const GenerativeBackground: React.FC = () => {
       rects = [];
       for (let i = 0; i < num; i++) {
         rects.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          w: Math.random() * 800 + 400,
-          h: Math.random() * 20 + 2,
-          speed: Math.random() * 1.5 + 0.2,
-          color: colors[Math.floor(Math.random() * colors.length)],
+          x: Math.random() * width * 1.5 - width * 0.25,
+          y: Math.random() * height * 1.5 - height * 0.25,
+          w: Math.random() * 1000 + 1000,
+          h: Math.random() * 15 + 3,      // Very thin elegant lines
+          speed: Math.random() * 3.5 + 2.0, // High speed for energy
+          color: getRandomColor(),
           blend: 'screen',
-          opacity: Math.random() * 0.15 + 0.05
+          opacity: Math.random() * 0.18 + 0.12,
+          pulseSpeed: Math.random() * 0.03 + 0.01
         });
       }
     };
@@ -86,18 +88,21 @@ const GenerativeBackground: React.FC = () => {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
+      const time = Date.now() / 1000;
 
       rects.forEach(rect => {
         rect.x += Math.cos(angle) * rect.speed;
         rect.y += Math.sin(angle) * rect.speed;
 
-        // Wrap around with large margins
-        if (rect.x < -1000) rect.x = width + 500;
-        if (rect.x > width + 1000) rect.x = -500;
-        if (rect.y < -1000) rect.y = height + 500;
-        if (rect.y > height + 1000) rect.y = -500;
+        const dynamicOpacity = rect.opacity + Math.sin(time * rect.pulseSpeed * 10) * 0.06;
 
-        drawSkewedRect(rect.x, rect.y, rect.w, rect.h, rect.color, rect.opacity, rect.blend);
+        const bound = 2000;
+        if (rect.x < -bound) rect.x = width + bound;
+        if (rect.x > width + bound) rect.x = -bound;
+        if (rect.y < -bound) rect.y = height + bound;
+        if (rect.y > height + bound) rect.y = -bound;
+
+        drawSkewedRect(rect.x, rect.y, rect.w, rect.h, rect.color, dynamicOpacity, rect.blend);
       });
 
       animationId = requestAnimationFrame(animate);

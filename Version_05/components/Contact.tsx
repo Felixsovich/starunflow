@@ -40,7 +40,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-40 bg-base-dark text-white relative overflow-hidden">
+    <section id="contact" className="py-40 bg-transparent text-white relative overflow-hidden">
 
       <div className="max-w-[90vw] mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-24 items-end">
