@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    cursor: default;
+    @apply bg-base-dark text-white antialiased overflow-x-hidden selection:bg-trend-lime selection:text-black;
+  }
+}
+
+/* INFINITE MARQUEE */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+/* APPLE GLASS */
+.glass-panel {
+  @apply bg-white/[0.01] backdrop-blur-2xl border border-white/10;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* GLITCH CORNERS */
+.glitch-border {
+  position: relative;
+}
+
+.glitch-border::before,
+.glitch-border::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #dbf246;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glitch-border::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.glitch-border::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.glitch-border:hover::before,
+.glitch-border:hover::after {
+  opacity: 1;
+  animation: corner-flicker 0.2s infinite;
+}
+
+@keyframes corner-flicker {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-2px, 2px);
+  }
+
+  100% {
+    transform: translate(1px, -1px);
+  }
+}
+
+/* HERO PERSPECTIVE */
+.perspective-container {
+  perspective: 1200px;
+}
+
+/* STROKE TEXT */
+.stroke-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+
+.overflow-hidden-mask {
+  overflow: hidden;
+  display: block;
+}
